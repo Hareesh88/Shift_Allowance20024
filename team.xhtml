@@ -1,0 +1,118 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://java.sun.com/jsf/html"
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:p="http://primefaces.org/ui">
+<h:head>
+ <title>Allowance</title>
+  <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Users</title>
+
+    <link href="../css/main.css" rel="stylesheet" type="text/css"></link>
+    <link href="../icons/style.css" rel="stylesheet" type="text/css"></link>
+ 
+<style type="text/css">
+     .ui-row-editor .ui-row-editor-pencil {
+        margin-left:8px;
+    }
+    
+    </style>
+
+</h:head>
+<h:body>
+ <h:form id="form">
+ <p:panel id="basic"   style="margin-bottom:20px;background-color: #DDE8EF;">
+ 
+   <h2>Shift Allowance</h2>
+    <p:growl id="messages"/>
+         <p:menubar style="margin-top:20px;background-color: #A0F2F8 !important;">
+
+        <p:menuitem value="Home" action="#{userMB.gotoHomePage}"  icon="pi pi-home"/>
+
+       <p:submenu label="Users" icon="pi pi-users">
+                <p:menuitem value="All Users"  action="#{userMB.getAllUserDetails}" />
+              
+        </p:submenu>
+         <p:submenu label="Team" icon="pi pi-id-card">
+                <p:menuitem value="All Teams"  action="#{adminMB.toTeamPage}" />
+                
+        </p:submenu>
+        <p:submenu label="Project" icon="pi pi-file">
+                <p:menuitem value="All Projects" action="#{adminMB.toprojectPage}" />
+                
+        </p:submenu>
+        <f:facet name="options">
+            <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
+            <p:commandButton  value="Logout" icon="pi pi-home" action="#{userMB.retruntoLogin}"/>
+        </f:facet>
+    </p:menubar>
+   </p:panel>
+
+ <p:commandButton   update="users" icon="pi pi-search"  oncomplete="PF('userDialog').show()" value="Add Team"  />
+ <p:commandButton update="users" icon="pi pi-search" value="Delete" action="#{adminMB.deleteProject}" />
+ 
+ <p:dataTable id="users" var="team" value="#{adminMB.teamDtoList}"  selection="#{adminMB.selectedTeam}" 
+ rowKey="#{team.teamId}"  style="margin-top: 10px;">
+        <f:facet name="header">
+            Team Details
+        </f:facet>
+         <p:column selectionMode="single" style="width:16px;text-align:center"/>
+        <p:column >
+            <h:outputText value="#{team.index}" />
+        </p:column>
+        <p:column headerText="Team ID">
+            <h:outputText value="#{team.teamId}" />
+        </p:column>
+        <p:column headerText="Team Name">
+            <h:outputText value="#{team.teamName}" />
+        </p:column>
+        <p:column headerText="Description">
+            <h:outputText value="#{team.description}" />
+        </p:column>
+        <p:column headerText="Created Date">
+            <h:outputText value="#{team.created}" >
+            <f:convertDateTime pattern="dd/MM/yyyy" />
+            </h:outputText>
+        </p:column>
+        <p:column headerText="Status">
+            <h:outputText value="#{team.status}"/>
+        </p:column>
+        <p:column headerText="Manager">
+            <h:outputText value="#{team.managerName}"/>
+        </p:column>
+    </p:dataTable>
+
+ 
+<p:dialog id="templateDialog" header="New Team" widgetVar="userDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="600">
+        <p:outputPanel id="newUserDetail" style="text-align:center;">
+        
+            <h:panelGrid  columns="2"  cellpadding="5">
+                
+                <h:outputText value="Team:" style="font-weight: bold"/>
+                <p:inputText value="#{adminMB.teamName}" style="width:100%"/>
+                
+ 
+                <h:outputText value="Description:"  style="font-weight: bold"/>
+                <p:inputTextarea rows="6" cols="33" value ="#{adminMB.teamDescription}"/>
+                
+                <h:outputText value="Manager:"  style="font-weight: bold"/>
+                <p:selectOneMenu id="manager" value="#{adminMB.managerId}" effect="fold" editable="true">
+                <f:selectItem itemLabel="Select One" itemValue="" />
+                <f:selectItems value="#{adminMB.managers}" />
+                </p:selectOneMenu>
+ 
+             
+            </h:panelGrid>
+            <br/>
+             <h:panelGrid  columns="2"  cellpadding="5">
+            <p:commandButton   icon="pi pi-search"  value="Save"  action ="#{adminMB.saveTeam}" update="users" oncomplete="PF('userDialog').hide();" style="background-color: #13F67F;"/>
+             <p:commandButton  icon="pi pi-search" value="Cancel"  update="users" style="background-color: #F83924;"/>
+       </h:panelGrid>
+        </p:outputPanel>
+    </p:dialog>
+
+   
+ </h:form>
+</h:body>
+ 
+</html>

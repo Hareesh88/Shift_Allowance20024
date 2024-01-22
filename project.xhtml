@@ -1,0 +1,133 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://java.sun.com/jsf/html"
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:p="http://primefaces.org/ui">
+<h:head>
+ <title>Allowance</title>
+  <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Users</title>
+
+    <link href="../css/main.css" rel="stylesheet" type="text/css"></link>
+    <link href="../icons/style.css" rel="stylesheet" type="text/css"></link>
+ 
+<style type="text/css">
+     .ui-row-editor .ui-row-editor-pencil {
+        margin-left:8px;
+    }
+    
+    </style>
+
+</h:head>
+<h:body>
+ <h:form id="form">
+ <p:panel id="basic"   style="margin-bottom:20px;background-color: #DDE8EF;">
+ 
+   <h2>Shift Allowance</h2>
+    <p:growl id="messages"/>
+         <p:menubar style="margin-top:20px;background-color: #A0F2F8 !important;">
+
+        <p:menuitem value="Home" action="#{userMB.gotoHomePage}"  icon="pi pi-home"/>
+
+       <p:submenu label="Users" icon="pi pi-users">
+                <p:menuitem value="All Users"  action="#{userMB.getAllUserDetails}" />
+              
+        </p:submenu>
+         <p:submenu label="Team" icon="pi pi-id-card">
+                <p:menuitem value="All Teams"  action="#{adminMB.toTeamPage}" />
+                
+        </p:submenu>
+        <p:submenu label="Project" icon="pi pi-file">
+                <p:menuitem value="All Projects" action="#{adminMB.toprojectPage}" />
+                
+        </p:submenu>
+        <f:facet name="options">
+           <h:outputText style="margin:1px 10px 1px 1px;color: #34495E;font-weight: bold;" value="#{userMB.userLoginName}"/>
+            <p:commandButton  icon="pi pi-power-off" action="#{userMB.retruntoLogin}"/>
+        </f:facet>
+    </p:menubar>
+   </p:panel>
+
+ <p:commandButton   update="users" icon="pi pi-plus"  oncomplete="PF('userDialog').show()" value="Add Project"  style="background-color: green;"/>
+ <p:commandButton update="users" icon="pi pi-times" value="Delete" action="#{adminMB.deleteProject}"  style="margin-left: 10px;background-color: red;"/>
+ 
+ <p:dataTable id="users" var="project" value="#{adminMB.projectDtoList}"  selection="#{adminMB.selectedProject}" 
+ rowKey="#{project.projectId}"  style="margin-top: 10px;" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                 paginator="true" rows="10">
+        <f:facet name="header">
+            Project Details
+        </f:facet>
+         <p:column selectionMode="single" style="width:16px;text-align:center"/>
+         
+         <p:column >
+            <h:inputHidden value="#{project.projectId}" />
+        </p:column>
+        <p:column >
+            <h:outputText value="#{project.index}" />
+        </p:column>
+        <p:column headerText="Project Name">
+            <h:outputText value="#{project.projectName}" />
+        </p:column>
+        <p:column headerText="Description">
+            <h:outputText value="#{project.description}" />
+        </p:column>
+        <p:column headerText="Created Date">
+            <h:outputText value="#{project.created}" >
+            <f:convertDateTime pattern="dd/MM/yyyy" />
+            </h:outputText>
+        </p:column>
+        <p:column headerText="Status">
+            <h:outputText value="#{project.status}"/>
+        </p:column>
+        <p:column headerText="Type">
+            <h:outputText value="#{project.projectType}"/>
+        </p:column>
+         <p:column headerText="Start Date">
+            <h:outputText value="#{project.strStartDate}"/>
+        </p:column>
+         <p:column headerText="End Date">
+            <h:outputText value="#{project.strEndDate}"/>
+        </p:column>
+    </p:dataTable>
+
+ 
+<p:dialog id="templateDialog" header="New Project" widgetVar="userDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="600">
+        <p:outputPanel id="newUserDetail" style="text-align:center;">
+        
+            <h:panelGrid  columns="2"  cellpadding="5">
+                
+                <h:outputText value="Project Name:" style="font-weight: bold"/>
+                <p:inputText value="#{adminMB.projectName}" style="width:100%"/>
+                
+ 
+                <h:outputText value="Project Description:"  style="font-weight: bold"/>
+                <p:inputTextarea rows="6" cols="33" value ="#{adminMB.projectDescription}"/>
+                
+                
+             <h:outputText value="Project Type:"  style="font-weight: bold"/>
+            <p:selectOneMenu id="projectType" value="#{adminMB.projectType}" >
+                 <f:selectItem itemLabel="Production Support" itemValue="Support" />
+                 <f:selectItem itemLabel="Infrastructure" itemValue="INFRA" />
+                 <f:selectItem itemLabel="Development" itemValue="Development" />
+           </p:selectOneMenu>        
+             
+             <h:outputText value="Start Date:"  style="font-weight: bold"/>
+             <p:calendar id="startdate" value="#{adminMB.startDate}" mask="true"/>
+             
+             <h:outputText value="End Date:"  style="font-weight: bold"/>
+             <p:calendar id="enddate" value="#{adminMB.endDate}" mask="true"/>
+             
+            </h:panelGrid>
+            <br/>
+             <h:panelGrid  columns="2"  cellpadding="5">
+            <p:commandButton   icon="pi pi-check"  value="Save"  action ="#{adminMB.saveproject}" update="users" oncomplete="PF('userDialog').hide();" style="background-color: #13F67F;"/>
+             <p:commandButton  icon="pi pi-times" value="Cancel"  update="users" style="background-color: #F83924;" onclick="PF('userDialog').hide();"/>
+       </h:panelGrid>
+        </p:outputPanel>
+    </p:dialog>
+
+   
+ </h:form>
+</h:body>
+ 
+</html>

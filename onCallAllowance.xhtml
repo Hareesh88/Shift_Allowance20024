@@ -1,0 +1,194 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://java.sun.com/jsf/html"
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:p="http://primefaces.org/ui">
+<h:head>
+ <title>Allowance</title>
+ <script type="text/javascript">
+    PrimeFaces.locales['es'] = {
+        closeText: 'Cerrar',
+        prevText: 'Anterior',
+        nextText: 'Siguiente',
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+        dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+        weekHeader: 'Semana',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: '',
+        timeOnlyTitle: 'Sólo hora',
+        timeText: 'Tiempo',
+        hourText: 'Hora',
+        minuteText: 'Minuto',
+        secondText: 'Segundo',
+        currentText: 'Fecha actual',
+        ampm: false,
+        month: 'Mes',
+        week: 'Semana',
+        day: 'Día',
+        allDayText: 'Todo el día'
+    };
+    PrimeFaces.locales ['de'] = {
+        closeText: 'Schließen',
+        prevText: 'Zurück',
+        nextText: 'Weiter',
+        monthNames: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember' ],
+        monthNamesShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez' ],
+        dayNames: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+        dayNamesShort: ['Son', 'Mon', 'Die', 'Mit', 'Don', 'Fre', 'Sam'],
+        dayNamesMin: ['S', 'M', 'D', 'M ', 'D', 'F ', 'S'],
+        weekHeader: 'Woche',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix:'',
+        timeOnlyTitle: 'Nur Zeit',
+        timeText: 'Zeit',
+        hourText: 'Stunde',
+        minuteText: 'Minute',
+        secondText: 'Sekunde',
+        currentText: 'Aktuelles Datum',
+        ampm: false,
+        month: 'Monat',
+        week: 'Woche',
+        day: 'Tag',
+        allDayText: 'Ganzer Tag'
+    };
+</script>
+ 
+<script type="text/javascript">
+    //<![CDATA[
+    function dateTemplateFunc(date) {
+        return '<span style="background-color:' + ((date.day < 21 && date.day > 10) ? '#81C784' : 'inherit') + ';border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">' + date.day + '</span>';
+    }
+    
+    function dateCount(){
+    	
+    	alert('test');
+    	
+    }
+    
+    
+    //]]>
+</script>
+ 
+<style type="text/css">
+    .value {
+        font-weight: bold;
+    }
+    .ui-panelgrid.showcase-text-align-center .ui-grid-responsive .ui-panelgrid-cell {
+        text-align: center;
+    }
+ 
+    .customPanelGrid .ui-panelgrid-content {
+        align-items: center;
+    }
+</style>
+</h:head>
+<h:body>
+ <h:form>
+ <p:panel id="basic"   style="margin-bottom:20px;background-color: #DDE8EF;">
+ 
+   <h2>Shift Allowance</h2>
+    <p:growl id="messages"/>
+         <p:menubar style="margin-top:80px">
+        <p:submenu label="Request" icon="pi pi-file">
+             <p:menuitem value="Weekend Shift" action="#{allowanceMB.toWeekendDayShiftPage}" />
+                <p:menuitem value="Night Shift" action="#{allowanceMB.toWeekendNightShiftPage}" />
+                <p:menuitem value="On Call" action="#{allowanceMB.toOnCallShiftPage}" />
+        </p:submenu>
+ 
+       
+        <f:facet name="options">
+            <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
+            <p:commandButton  value="Logout" icon="pi pi-home" action="#{userMB.retruntoLogin}"  />
+        </f:facet>
+    </p:menubar>
+   </p:panel>
+   
+
+ <p:panel  header="OnCall Allowance"  style="margin-bottom:20px">
+    
+<p:commandButton style="margin-left: 70%;background-color:#066164;" oncomplete="PF('userDialog').show()" value="Add Allowance"> </p:commandButton> 
+      
+<p:dataTable id="allowance" var="shift" value="#{allowanceMB.allowanceDtoList}" style="margin-bottom:20px;width: 70%;margin-left: 10%" >
+
+    <p:column style="text-align:center">
+            <h:outputText value="#{shift.index}" />
+        </p:column>
+
+
+        <p:column style="text-align:center">
+            <f:facet name="header">
+                <h:outputText value="Allowance Date"/>
+            </f:facet>
+            <h:outputText value="#{shift.allowanceDate}"/>
+        </p:column>
+
+        <p:column style="text-align:center">
+            <f:facet name="header">
+                <h:outputText value="Allowance Status" />
+            </f:facet>
+            <h:outputText value="#{shift.allowanceStatus}" />
+        </p:column>
+        <p:column style="text-align:center">
+         <f:facet name="header"></f:facet>
+          <p:commandButton style="background-color:	#F7993C;"  value="Delete"  disabled="#{shift.disableButton}" action="#{allowanceMB.deleteAllowance}"  > 
+           <f:setPropertyActionListener value="#{shift}" target="#{allowanceMB.selectedDayAllow}" />
+          </p:commandButton>
+         
+        </p:column>
+        
+    </p:dataTable>
+    </p:panel>
+   
+    <p:dialog id="templateDialog" header="Weekend Support Input" widgetVar="userDialog" modal="true"  resizable="false" width="500">
+        <p:outputPanel id="newUserDetail" style="text-align:center;">
+        
+            <h:panelGrid  columns="2"  cellpadding="10">
+                
+         <p:column  style="font-weight: bold;">Date Selection</p:column>
+        <p:column  style="font-weight: bold;">
+        <p:datePicker id="multiselect" selectionMode="multiple" value="#{allowanceMB.multi}" readonlyInput="true" 
+        disabledDays="#{allowanceMB.invalidDays}" disabledDates="#{allowanceMB.invalidDates}" />
+        </p:column>
+ 
+        <p:column  style="font-weight: bold;">No of days</p:column>
+        <p:column  style="font-weight: bold;background-color: #f0e5c7;"><p:inputText  value="#{allowanceMB.noOfDays}" readonly="true"/></p:column>
+               
+               
+          <p:column  style="font-weight: bold;">Project ID</p:column>
+          <p:column  style="font-weight: bold;background-color: #f0e5c7;"><p:inputText  value="#{allowanceMB.location}" /></p:column>   
+          
+           <p:column  style="font-weight: bold;">Location</p:column>
+           <p:selectOneMenu id="longItemLabel" value="#{userMB.ustTeam}" style="width:100px">
+            <f:selectItem itemLabel="Trivandrum" itemValue="Trivandrum" />
+            <f:selectItem itemLabel="Kochi" itemValue="Kochi" />
+            <f:selectItem itemLabel="Hyderabad" itemValue="Hyderabad" />
+            <f:selectItem itemLabel="Pune" itemValue="Pune" />
+            <f:selectItem itemLabel="Bhopal" itemValue="Bhopal" />
+            <f:selectItem itemLabel="Noida" itemValue="Noida" />
+            <f:selectItem itemLabel="Bangalore" itemValue="Bangalore" />
+            <f:selectItem itemLabel="Chennai" itemValue="Chennai" />
+        </p:selectOneMenu>         
+                
+            </h:panelGrid>
+            <br/>
+             <p:commandButton value="Submit"  style="margin-right:20px;background-color: #008080;" action="#{allowanceMB.addDayAllowance}" update="allowance" oncomplete="PF('userDialog').hide();"/> 
+             <p:commandButton  icon="pi pi-search" value="Cancel"   onclick="PF('userDialog').hide();" style="background-color: #D8BFD8;"/>
+        </p:outputPanel>
+    </p:dialog>    
+        
+   
+   
+   
+   
+   
+   
+ </h:form>
+</h:body>
+ 
+</html>

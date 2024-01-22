@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://java.sun.com/jsf/html"
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:p="http://primefaces.org/ui">
+<h:head>
+ <title>Allowance</title>
+  <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Users</title>
+    <link href="../css/main.css" rel="stylesheet" type="text/css"></link>
+    <link href="../icons/style.css" rel="stylesheet" type="text/css"></link>
+<style type="text/css">
+     .ui-row-editor .ui-row-editor-pencil {
+        margin-left:8px;
+    }
+    
+    </style>
+
+</h:head>
+<h:body>
+ <h:form id="form">
+ <p:panel id="basic"   style="margin-bottom:20px;background-color: #DDE8EF;">
+ 
+   <h2>Shift Allowance</h2>
+         <p:menubar style="margin-top:40px;;background-color: #A0F2F8 !important;">
+         <p:menuitem value="Home" action="#{allowanceMB.gotoHomePage}"  icon="pi pi-home"/>
+        </p:menubar>
+     </p:panel>
+        <p:outputPanel id="newUserDetail" style="text-align:center;">
+         <p:messages id="messages" showDetail="true" autoUpdate="true"/> 
+            <h:panelGrid  columns="2"  cellpadding="10" id="matchGrid"> 
+                <h:outputText value="UST-ID:" style="font-weight: bold"/>
+                <p:inputText value="#{userMB.ustr_id}" style="width:100%"  readonly="true"/>
+                
+                 <h:outputText value="User-Role" style="font-weight: bold"/>
+                 <p:inputText value="#{userMB.role}" style="width:100%" readonly="true"/>
+                
+                <h:outputText value="UST-Team:"  style="font-weight: bold"/>
+                <p:inputText value="#{userMB.ustTeam}" style="width:100%" readonly="true"/>
+                
+                <h:outputText value="First Name:"  style="font-weight: bold"/>
+                <p:inputText value="#{userMB.firstName}" style="width:100%" />
+ 
+                <h:outputText value="Last Name:" style="font-weight: bold"/>
+                <p:inputText value="#{userMB.lastNmae}" style="width:100%" />
+                
+                 <h:outputText value="Email:" style="font-weight: bold"/>
+                <p:inputText value="#{userMB.email}" style="width:100%" />
+             
+               
+                
+            </h:panelGrid>
+            <br/>
+            <p:commandButton   icon="pi pi-search"  value="Update"  update="matchGrid" />
+             <p:commandButton  icon="pi pi-search" value="Cancel"  />
+        </p:outputPanel>
+    
+
+   
+ </h:form>
+</h:body>
+ 
+</html>

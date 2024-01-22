@@ -1,0 +1,181 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://java.sun.com/jsf/html"
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:p="http://primefaces.org/ui">
+<h:head>
+ <title>Allowance</title>
+  <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Admin</title>
+
+    <link href="../css/main.css" rel="stylesheet" type="text/css"></link>
+    <link href="../icons/style.css" rel="stylesheet" type="text/css"></link>
+  <script type="text/javascript">
+  
+   function myTestFunction() {
+     var selectedValue=PF('allwstatus').getSelectedValue();
+     if(selectedValue =='Approved'){
+    	 PF('approve').disable();
+    	 PF('reject').disable();
+     }
+     if(selectedValue =='Rejected'){
+    	 PF('approve').disable();
+    	 PF('reject').disable();
+     }
+     
+     if(selectedValue =='InProgress'){
+    	 PF('approve').enable();
+    	 PF('reject').enable();
+     }
+
+  }
+  
+  </script>
+<style type="text/css">
+  
+
+    .value {
+        width: 1000px;
+    }
+     .month_default_event_inner {
+        border-radius: 20px;
+    }
+     .ui-paginator a {
+        margin-right: 5px;
+    }
+     .ui-panelgrid.showcase-text-align-center .ui-grid-responsive .ui-panelgrid-cell {
+        text-align: center;
+    }
+ 
+    .customPanelGrid .ui-panelgrid-content {
+        align-items: center;
+    }
+    </style>
+
+</h:head>
+<h:body >
+ <h:form id ="form">
+
+ <p:panel id="basic"   style="margin-bottom:20px;background-color: #DDE8EF;">
+ 
+   <h2 style="font-style: italic;">Shift Allowance</h2>
+    <p:growl id="messages"/>
+         <p:menubar style="margin-top:20px;background-color: #A0F2F8 !important;">
+      
+        <f:facet name="options">
+            <h:outputText style="margin:1px 10px 1px 1px;color: #34495E;font-weight: bold;" value="#{userMB.userLoginName}"/>
+            <p:commandButton   icon="pi pi-power-off" action="#{userMB.retruntoLogin}" />
+        </f:facet>
+    </p:menubar>
+   </p:panel>
+    <p:panel >
+      <div style="background: #D6EAF8 !important;">
+      <h:panelGrid columns="7" cellpadding="10"  layout="flex" style="margin-left:20%;">
+      <p:outputLabel for="team" value="UST-Team:"/>
+      <p:selectOneMenu id="team" value="#{adminMB.ustTeam}" effect="fold" >
+            <f:selectItem itemLabel="Select One" itemValue="" />
+             <f:selectItems value="#{userMB.allteams}" />
+             </p:selectOneMenu>
+                
+        <p:outputLabel for="ustID" value="UST-ID:"/>
+        <p:inputText value="#{adminMB.ustr_id}" id="ustID"/>
+        
+        <p:outputLabel for="status" value="Status:"/>
+        <p:selectOneMenu id="status" value="#{adminMB.allowanceStatus}" widgetVar="allwstatus" onchange="myTestFunction()">
+            <f:selectItem itemLabel="InProgress" itemValue="InProgress" />
+            <f:selectItem itemLabel="Approved" itemValue="Approved" />
+            <f:selectItem itemLabel="Rejected" itemValue="Rejected" />
+        </p:selectOneMenu>
+        
+  <p:commandButton  icon="pi pi-search" value="Search"  action="#{adminMB.searchShiftAllowance}" update="userTable"
+  style="background-color: #67E1F1;" />
+</h:panelGrid>
+</div>
+    </p:panel>
+    
+<p:panel>
+    <p:dataTable id="userTable" var="user" value="#{adminMB.allowanceDtoList}"  
+      style="margin-bottom:20px" selection="#{adminMB.selectedAllowance}" rowKey="#{user.allowanceId}" 
+      rows="10" paginator="true"
+      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+      currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+      rowsPerPageTemplate="5,10,15">
+                 
+       <p:column selectionMode="multiple" style="width:16px;text-align:center" />
+
+      <p:column style="text-align:center">
+            <h:outputText value="#{user.allowanceId}" />
+        </p:column>
+
+        <p:column style="text-align:center">
+            <f:facet name="header">
+                <h:outputText value="UST_ID" />
+            </f:facet>
+            <h:outputText value="#{user.ustr_id}" />
+        </p:column>
+
+        <p:column style="text-align:center">
+            <f:facet name="header">
+                <h:outputText value="First Name"/>
+            </f:facet>
+            <h:outputText value="#{user.firstName}" />
+        </p:column>
+
+        <p:column style="text-align:center">
+            <f:facet name="header">
+                <h:outputText value="Last Name" />
+            </f:facet>
+            <h:outputText value="#{user.lastNmae}" />
+        </p:column>
+
+        <p:column style="text-align:center">
+            <f:facet name="header">
+                <h:outputText value="Shift Type" />
+            </f:facet>
+            <h:outputText value="#{user.type}" />
+        </p:column>
+        
+        <p:column style="text-align:center">
+            <f:facet name="header">
+                <h:outputText value="Date" />
+            </f:facet>
+            <h:outputText value="#{user.strDate}" >
+            </h:outputText>
+        </p:column>
+        
+        
+        <p:column style="text-align:center">
+            <f:facet name="header">
+                <h:outputText value="Shift Status" />
+            </f:facet>
+            <h:outputText value="#{user.status}" />
+        </p:column>
+         <f:facet name="footer">
+            <p:commandButton id="approve" widgetVar="approve" icon="pi pi-check" value="Approve"  style="background-color: #13F67F;" action="#{adminMB.approveAllowance}" update="userTable"/>
+            <p:commandButton  id="reject" widgetVar="reject" icon="pi pi-times" value="Reject" style="background-color: #F83924;"  
+             oncomplete ="PF('userDialog').show()" />
+        </f:facet>
+    </p:dataTable>
+</p:panel>
+ <p:dialog id="templateDialog" header="Allowance Reject" widgetVar="userDialog" modal="true"  resizable="false" width="400">
+        <p:outputPanel id="newUserDetail" style="text-align:center;">
+        
+            <h:panelGrid  columns="1"  cellpadding="10">
+             <p:column  style="font-weight: bold;">Add Notes</p:column>
+             <p:inputTextarea rows="6" cols="33"   value="#{adminMB.rejectNote}" />
+            </h:panelGrid>
+            <br/>
+             <p:commandButton icon="pi  pi-spinner" value="Submit"  style="margin-right:20px;background-color: #008080;" action="#{adminMB.rejectAllowance}"   oncomplete="PF('userDialog').hide();" update="userTable"/> 
+             <p:commandButton  icon="pi pi-times-circle" value="Cancel"   onclick="PF('userDialog').hide();" style="background-color: #D8BFD8;"/>
+        </p:outputPanel>
+    </p:dialog>    
+
+
+
+
+
+   
+ </h:form>
+</h:body>
+ 
+</html>

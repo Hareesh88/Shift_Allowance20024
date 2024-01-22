@@ -1,0 +1,170 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+<title>Shift Tracker</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"/>
+  <title>Sign in</title>
+
+  <!--Stylesheet-->
+    <style >
+    body {
+        background-color: #F3EBF6;
+        font-family: 'Ubuntu', sans-serif;
+        background-image: url("./images/Campusphoto.jpg");
+        background-size: cover;
+        
+      
+    
+    .main {
+        background-color: #FFFFFF;
+        width: 400px;
+        height: 400px;
+        margin: 7em auto;
+        border-radius: 1.5em;
+        box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+    }
+    
+    .sign {
+        padding-top: 5px;
+        color: #8C55AA;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: bold;
+        font-size: 23px;
+    }
+    
+    .un {
+    width: 76%;
+    color: rgb(38, 50, 56);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    background: rgba(136, 126, 126, 0.04);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    box-sizing: border-box;
+    border: 2px solid rgba(0, 0, 0, 0.02);
+    margin-bottom: 50px;
+    margin-left: 46px;
+    text-align: center;
+    margin-bottom: 27px;
+    font-family: 'Ubuntu', sans-serif;
+    }
+    
+    
+    
+    .pass {
+            width: 76%;
+    color: rgb(38, 50, 56);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    background: rgba(136, 126, 126, 0.04);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    box-sizing: border-box;
+    border: 2px solid rgba(0, 0, 0, 0.02);
+    margin-bottom: 50px;
+    margin-left: 46px;
+    text-align: center;
+    margin-bottom: 27px;
+    font-family: 'Ubuntu', sans-serif;
+    }
+    
+   
+    .un:focus, .pass:focus {
+        border: 2px solid rgba(0, 0, 0, 0.18) !important;
+        
+    }
+    
+    .submit {
+      cursor: pointer;
+        border-radius: 5em;
+        color: #fff;
+        background: linear-gradient(to right, #9C27B0, #E040FB);
+        border: 0;
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        font-family: 'Ubuntu', sans-serif;
+        margin-left: 35%;
+        font-size: 13px;
+        box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+    }
+    
+    .forgot {
+        text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+        color: #E1BEE7;
+        padding-top: 15px;
+    }
+    
+    a {
+        text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+        color: #E1BEE7;
+        text-decoration: none
+    }
+    
+    @media (max-width: 600px) {
+        .main {
+            border-radius: 0px;
+        }
+
+ .brand {
+	display: block;
+	float: left;
+	padding: 10px 20px 10px;
+	margin-left: -20px;
+	font-size: 20px;
+	font-weight: 200;
+	color: #777;
+	text-shadow: 0 1px 0 #fff;
+}
+    </style>
+    </h:head>
+
+  <body>
+  <div class="main">
+  <div align="center">
+  <img border="0" 
+		 src="./images/UST_Log.gif"
+		 alt="" width="80" height="80" hspace="5" style="padding-top: 15px;" /> 
+  </div>
+  
+    <p class="sign" align="center">Sign in</p>
+    <h:form class="form1">
+      
+           <h:panelGrid columns="2" cellpadding="10">
+           
+            <h:outputLabel for="username" value="Username:" />
+            <p:inputText id="username" value="#{userMB.userName}"  label="username" />
+             
+            <h:outputLabel for="password" value="Password:" />
+            <p:password id="password" value="#{userMB.password}"  label="password" />
+            
+           </h:panelGrid>
+           
+           <center>
+            <h:panelGrid columns="1" cellpadding="10">
+             <p:commandButton value="Login"  action="#{userMB.userLogin}"  />
+             <p:commandLink value="Forgot Password?" action="#{userMB.forgetPassword}"></p:commandLink>
+             </h:panelGrid>
+           </center>
+        </h:form>    
+                
+    </div>
+     
+</body>
+
+
+
+
+</html>

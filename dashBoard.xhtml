@@ -1,0 +1,131 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://java.sun.com/jsf/html"
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:p="http://primefaces.org/ui">
+<h:head>
+ <title>Allowance</title>
+  <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="../css/main.css" rel="stylesheet" type="text/css"></link>
+    <link href="../icons/style.css" rel="stylesheet" type="text/css"></link>
+ 
+
+
+ <style type="text/css">
+    .value {
+        width: 1000px;
+    }
+     .month_default_event_inner {
+        border-radius: 20px;
+    }
+    
+    body{
+    background-image: url("./images/Campusphoto.jpg");
+    background-size: cover;
+    }
+    </style>
+
+</h:head>
+<h:body>
+ <h:form>
+ <p:panel id="basic" style="width: 80%;margin-left: 10%;">
+ <div class="ui-g">
+    <div class="ui-g-1"><img border="0" 
+		 src="./images/UST_Log.gif"
+		 alt="" width="80" height="80"  /></div>
+    <div class="ui-g-2"><h2 style="font-style: italic;">Shift Allowance</h2></div>
+</div>
+    <p:growl id="messages"/>
+       <p:menubar style="background-color: #F9EBEA !important;"> 
+         <p:menuitem value="Home" action="#{allowanceMB.gotoHomePage}"  icon="pi pi-home"/>
+          <p:submenu label="Allowance" icon="pi pi-calendar-plus">
+                <p:menuitem value="Day Shift" action="#{allowanceMB.toWeekendDayShiftPage}" icon="pi pi-sun"/>
+                <p:menuitem value="Night Shift" action="#{allowanceMB.toWeekendNightShiftPage}"  icon="pi pi-moon"/>
+         </p:submenu>
+         <p:submenu label="Settings" icon="pi pi-cog">
+                <p:menuitem value="Reset-Password"  action="#{userMB.goToResetPassword}" />
+        </p:submenu>
+          <f:facet name="options">
+             <h:outputText style="margin:1px 10px 1px 1px;color: #34495E;font-weight: bold;" value="#{userMB.userLoginName}"/>
+             <p:commandButton  icon="pi pi-power-off" action="#{userMB.retruntoLogin}"/>
+         </f:facet>
+    </p:menubar>
+   </p:panel>
+  <p:panel  style="margin-bottom:20px;width: 80%;margin-left: 10%;height: 500px;">
+  <p:panel>
+  <div style="background: #F8F9F9  !important;">
+        <p:messages>
+            <p:autoUpdate />
+        </p:messages>
+   <h:panelGrid columns="9" cellpadding="3"  layout="flex" >
+      <p:outputLabel for="fromdate" value="From-Date" />
+        <p:datePicker id="fromdate" showIcon="true" style="width:auto"  value="#{allowanceMB.fromDate}" />
+        <p:outputLabel for="todate" value="To-Date" />
+        <p:datePicker id="todate" showIcon="true" style="width:auto" value="#{allowanceMB.toDate}" />
+        <p:outputLabel for="status" value="Allowance Type"/>
+        <p:selectOneMenu id="type" value="#{allowanceMB.allowanceType}" >
+            <f:selectItem itemLabel="Day Shift" itemValue="Day" />
+            <f:selectItem itemLabel="Night Shift" itemValue="Night" />
+        </p:selectOneMenu>
+        <p:outputLabel for="status" value="Status:" />
+        <p:selectOneMenu id="status" value="#{allowanceMB.allowanceStatus}" >
+            <f:selectItem itemLabel="InProgress" itemValue="InProgress" />
+            <f:selectItem itemLabel="Approved" itemValue="Approved" />
+            <f:selectItem itemLabel="Rejected" itemValue="Rejected" />
+        </p:selectOneMenu>
+        <p:commandButton  value="Search" icon="pi pi-search" action="#{allowanceMB.searchAllowanceByDate}"  
+        style="background-color: #67E1F1;" update="allowance"/>
+   </h:panelGrid>
+   </div>
+   </p:panel>
+<br/>
+  
+  <p:dataTable id="allowance" var="shift" value="#{allowanceMB.mainAllowanceDtoList}"  
+  rows="10" paginator="true"
+  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+   rowsPerPageTemplate="5,10,15" scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="500">
+
+        <p:column style="text-align:center">
+            <h:outputText value="#{shift.index}" />
+        </p:column>
+
+        <p:column style="text-align:center">
+            <f:facet name="header">
+                <h:outputText value=" Date"/>
+            </f:facet>
+            <h:outputText value="#{shift.allowanceDate}">
+              <f:convertDateTime pattern="dd/MM/yyyy" />
+            </h:outputText>
+        </p:column>
+
+        <p:column style="text-align:center">
+            <f:facet name="header">
+                <h:outputText value=" Status" />
+            </f:facet>
+            <h:outputText value="#{shift.allowanceStatus}" />
+        </p:column>
+         <p:column style="text-align:center">
+           <f:facet name="header">
+                <h:outputText value=" Type"/>
+            </f:facet>
+            <h:outputText value="#{shift.allowanceType}"/>
+        </p:column>
+        <p:column style="text-align:center">
+           <f:facet name="header">
+                <h:outputText value="Approved By"/>
+            </f:facet>
+            <h:outputText value="#{shift.approvedBy}"/>
+        </p:column>
+         <p:column style="text-align:center">
+           <f:facet name="header">
+                <h:outputText value="Approved Date"/>
+            </f:facet>
+            <h:outputText value="#{shift.approveDate}"/>
+        </p:column>
+    </p:dataTable>
+     </p:panel>
+ </h:form>
+</h:body>
+ 
+</html>

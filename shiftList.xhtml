@@ -1,0 +1,156 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://java.sun.com/jsf/html"
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:p="http://primefaces.org/ui">
+<h:head>
+ <title>Allowance</title>
+ <script type="text/javascript">
+    PrimeFaces.locales['es'] = {
+        closeText: 'Cerrar',
+        prevText: 'Anterior',
+        nextText: 'Siguiente',
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+        dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+        weekHeader: 'Semana',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: '',
+        timeOnlyTitle: 'Sólo hora',
+        timeText: 'Tiempo',
+        hourText: 'Hora',
+        minuteText: 'Minuto',
+        secondText: 'Segundo',
+        currentText: 'Fecha actual',
+        ampm: false,
+        month: 'Mes',
+        week: 'Semana',
+        day: 'Día',
+        allDayText: 'Todo el día'
+    };
+    PrimeFaces.locales ['de'] = {
+        closeText: 'Schließen',
+        prevText: 'Zurück',
+        nextText: 'Weiter',
+        monthNames: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember' ],
+        monthNamesShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez' ],
+        dayNames: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+        dayNamesShort: ['Son', 'Mon', 'Die', 'Mit', 'Don', 'Fre', 'Sam'],
+        dayNamesMin: ['S', 'M', 'D', 'M ', 'D', 'F ', 'S'],
+        weekHeader: 'Woche',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix:'',
+        timeOnlyTitle: 'Nur Zeit',
+        timeText: 'Zeit',
+        hourText: 'Stunde',
+        minuteText: 'Minute',
+        secondText: 'Sekunde',
+        currentText: 'Aktuelles Datum',
+        ampm: false,
+        month: 'Monat',
+        week: 'Woche',
+        day: 'Tag',
+        allDayText: 'Ganzer Tag'
+    };
+</script>
+ 
+<script type="text/javascript">
+    //<![CDATA[
+    function dateTemplateFunc(date) {
+        return '<span style="background-color:' + ((date.day < 21 && date.day > 10) ? '#81C784' : 'inherit') + ';border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">' + date.day + '</span>';
+    }
+    //]]>
+</script>
+ 
+<style type="text/css">
+  
+</style>
+</h:head>
+<h:body>
+ <h:form>
+ <p:panel id="basic"   style="margin-bottom:20px;background-color: #DDE8EF;">
+ 
+   <h2>Shift Allowance</h2>
+    <p:growl id="messages"/>
+         <p:menubar style="margin-top:80px">
+        <p:submenu label="Request" icon="pi pi-file">
+                <p:menuitem value="Night Shift" url="#" />
+                <p:menuitem value="Night Shift BPO" url="#" />
+                <p:menuitem value="Weekend Support" url="#" />
+                <p:menuitem value="Weekend Support BPO" url="#" />  
+                <p:menuitem value="On Call" url="#" /> 
+        </p:submenu>
+ 
+        <p:submenu label="Approvals" icon="pi pi-pencil">
+                <p:menuitem value="Night Shift" url="#" />
+                <p:menuitem value="Night Shift BPO" url="#" />
+                <p:menuitem value="Weekend Support" url="#" />
+                <p:menuitem value="Weekend Support BPO" url="#" />  
+                <p:menuitem value="On Call" url="#" /> 
+        </p:submenu>
+ 
+        <p:submenu label="Approvals History" icon="pi pi-question">
+                <p:menuitem value="Night Shift" url="#" />
+                <p:menuitem value="Night Shift BPO" url="#" />
+                <p:menuitem value="Weekend Support" url="#" />
+                <p:menuitem value="Weekend Support BPO" url="#" />  
+                <p:menuitem value="On Call" url="#" /> 
+        </p:submenu>
+ 
+        <p:submenu label="Request History" icon="pi pi-cog">
+               <p:menuitem value="Night Shift" url="#" />
+                <p:menuitem value="Night Shift BPO" url="#" />
+                <p:menuitem value="Weekend Support" url="#" />
+                <p:menuitem value="Weekend Support BPO" url="#" />  
+                <p:menuitem value="On Call" url="#" /> 
+        </p:submenu>
+        <f:facet name="options">
+            <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
+            <p:commandButton  value="Logout" icon="pi pi-home" action="#{userMB.retruntoLogin}"/>
+        </f:facet>
+    </p:menubar>
+   </p:panel>
+    <p:panel>
+    
+      <p:dataTable var="shift" value="#{shiftApproveController.shiftAllowanceList}">
+    <p:column headerText="Id">
+        <h:outputText value="#{shift.usId}" />
+    </p:column>
+ 
+    <p:column headerText="FirstName">
+        <h:outputText value="#{shift.firstName}" />
+    </p:column>
+ 
+    <p:column headerText="LastName">
+        <h:outputText value="#{shift.lastName}" />
+    </p:column>
+ 
+    <p:column headerText="Type">
+        <h:outputText value="#{shift.allowanceType}" />
+    </p:column>
+     <p:column headerText="Date">
+        <h:outputText value="#{shift.shiftDate}" />
+    </p:column>
+     <p:column headerText="Project ID">
+        <h:outputText value="#{shift.projectId}" />
+    </p:column>
+     <p:column >
+       <p:commandButton type="button" value="Approve" icon="pi pi-home" />
+       <p:commandButton type="button" value="Reject" icon="pi pi-home" />
+    </p:column>
+</p:dataTable>
+      
+      
+      
+      
+   
+   </p:panel>
+ </h:form>
+</h:body>
+ 
+</html>
